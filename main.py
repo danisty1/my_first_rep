@@ -1,17 +1,10 @@
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
 from aiogram.types import Message
-import requests
+from temperature import city,temperature,temperature_feels
 
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота, полученный у @BotFather
 BOT_TOKEN = '6561953091:AAGTiy6Q2S9LhuVkZ1IKtiuErab11TQZ64I'
-
-# Запрос на погодный сервис
-city = 'Тамбов'
-url = 'https://api.openweathermap.org/data/2.5/weather?q='+city+'&units=metric&lang=ru&appid=79d1ca96933b0328e1c7e3e7a26cb347'
-weather_data = requests.get(url).json()
-temperature = round(weather_data['main']['temp'])
-temperature_feels = round(weather_data['main']['feels_like'])
 
 # Создаем объекты бота и диспетчера
 bot = Bot(token=BOT_TOKEN)
@@ -37,9 +30,9 @@ async def process_weather_command(message: Message):
 
 # Этот хэндлер будет срабатывать на любые ваши текстовые сообщения,
 # кроме команд "/start" и "/help"
-# @dp.message()
-# async def send_echo(message: Message):
-#     await message.reply(text=message.text)
+@dp.message()
+async def send_echo(message: Message):
+    await message.reply(text=message.text)
 
 if __name__ == '__main__':
     dp.run_polling(bot)
